@@ -1,0 +1,19 @@
+{
+  "appStoreConnect": {
+    "keyId": "YOUR_KEY_ID_HERE",
+    "issuerId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "privateKeyPath": "./AuthKey_YOUR_KEY_ID.p8"
+  },
+  "apps": [
+    {
+      "appId": "1629567018",
+      "appName": "Your App Name",
+      "discordWebhookUrl": "https://discord.com/api/webhooks/YOUR_WEBHOOK_URL_HERE"
+    },
+    {
+      "appId": "1234567890",
+      "appName": "Another App Name",
+      "discordWebhookUrl": "https://discord.com/api/webhooks/ANOTHER_WEBHOOK_URL_HERE"
+    }
+  ]
+} 

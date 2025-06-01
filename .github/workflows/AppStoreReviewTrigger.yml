@@ -1,0 +1,54 @@
+name: App Store Review Trigger
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Feature/AppStore
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "Feature/AppStore/package-lock.json"
+
+      - name: Create AuthKey file from environment
+        run: echo "${{ secrets.AUTH_KEY_P8 }}" > AuthKey_${{ secrets.KEY_ID }}.p8
+        env:
+          AUTH_KEY_P8: ${{ secrets.AUTH_KEY_P8 }}
+          KEY_ID: ${{ secrets.KEY_ID }}
+
+      - name: Create config.json from environment
+        run: echo '${{ secrets.CONFIG_JSON }}' > config.json
+        env:
+          CONFIG_JSON: ${{ secrets.CONFIG_JSON }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Run AppStore review checker
+        run: npm run prod
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add Feature/AppStore/storage.json
+          git commit -m ":card_file_box: Update processed reviews storage" || exit 0
+          git push
+        working-directory: .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
