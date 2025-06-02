@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-          cache-dependency-path: "Feature/AppStore/package-lock.json"
 
       - name: Create AuthKey file from environment
         run: echo "${{ secrets.AUTH_KEY_P8 }}" > AuthKey_${{ secrets.KEY_ID }}.p8
