@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Config, Storage } from "./types.js";
+import { Config, Storage } from "../feature/appstore/types";
 
 export function loadConfig(): Config {
   try {

@@ -15,7 +15,8 @@
     "forceConsistentCasingInFileNames": false,
     "removeComments": true,
     "typeRoots": ["node_modules/@types"],
-    "sourceMap": false
+    "sourceMap": false,
+    "types": ["node"]
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]

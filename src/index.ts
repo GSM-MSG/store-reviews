@@ -1,5 +1,6 @@
-import { ReviewNotifier } from "./reviewNotifier.js";
-import { loadConfig } from "./utils.js";
+import { ReviewNotifier } from "./feature/appstore/review-notifier";
+import { loadConfig } from "./shared/utils";
+import {playStore} from "./feature/playstore/playstore";
 
 class StoreReviewsBot {
   private reviewNotifier: ReviewNotifier;
@@ -29,9 +30,13 @@ class StoreReviewsBot {
 }
 
 async function main() {
-  const bot = new StoreReviewsBot();
+  if(false) {
+    const bot = new StoreReviewsBot();
+    await bot.runOnce();
+  } else {
+    playStore();
+  }
 
-  await bot.runOnce();
 }
 
 main().catch(console.error);

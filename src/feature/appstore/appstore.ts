@@ -6,7 +6,7 @@ import {
   AppStoreResponse,
   AppStoreReview,
   AppStoreConnectConfig,
-} from "./types.js";
+} from "./types";
 
 export class AppStoreAPI {
   private baseURL = "https://api.appstoreconnect.apple.com/v1";
