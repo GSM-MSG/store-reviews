@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Feature/AppStore
+        working-directory: feature/appstore
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -44,7 +44,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add Feature/AppStore/storage.json
+          git add feature/appStore/storage.json
           git commit -m ":card_file_box: Update processed reviews storage" || exit 0
           git push
         working-directory: .
