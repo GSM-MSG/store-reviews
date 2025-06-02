@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AppStoreReview, DiscordEmbed, DiscordWebhookPayload } from "./types";
+import { AppStoreReview, DiscordEmbed, DiscordWebhookPayload } from "./types.js";
 
 export class DiscordNotifier {
   async sendReview(

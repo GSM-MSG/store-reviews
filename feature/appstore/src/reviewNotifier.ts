@@ -1,7 +1,7 @@
-import { AppStoreAPI } from "./appstore";
-import { DiscordNotifier } from "./discord";
-import { AppConfig, Config } from "./types";
-import { loadStorage, saveStorage } from "./utils";
+import { AppStoreAPI } from "./appstore.js";
+import { DiscordNotifier } from "./discord.js";
+import { AppConfig, Config } from "./types.js";
+import { loadStorage, saveStorage } from "./utils.js";
 
 export class ReviewNotifier {
   private appStoreAPI: AppStoreAPI;

@@ -1,5 +1,5 @@
-import { ReviewNotifier } from "./reviewChecker";
-import { loadConfig } from "./utils";
+import { ReviewNotifier } from "./reviewNotifier.js";
+import { loadConfig } from "./utils.js";
 
 class StoreReviewsBot {
   private reviewNotifier: ReviewNotifier;
