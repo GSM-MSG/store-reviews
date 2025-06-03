@@ -1,23 +1,24 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "target": "ES2022",       // Node.js v22.1.0은 ES2022 완벽 지원
+    "module": "NodeNext",    // 핵심 변경: ESNext 또는 NodeNext
     "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext", // 핵심 변경: NodeNext 또는 bundler
     "importHelpers": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": false,
+    "forceConsistentCasingInFileNames": true, // true 권장
     "removeComments": true,
     "typeRoots": ["node_modules/@types"],
     "sourceMap": false,
     "types": ["node"]
   },
-  "include": ["**/*.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

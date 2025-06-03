@@ -1,15 +1,15 @@
 import {GoogleAuth} from "google-auth-library";
-import {PlayStoreReview, ReviewsResponse} from "../../shared/api/playstore.types";
 import axios from "axios";
+import {PlayStoreReview, PlayStoreReviewsResponse} from "./playstore.types.js";
 
 const BASE_URL = `https://androidpublisher.googleapis.com/androidpublisher/v3/applications`;
+
 const auth = new GoogleAuth({
-    keyFile: "",
+    keyFile: "YOUR_KEY_FILE_PATH.json",
     scopes: ['https://www.googleapis.com/auth/androidpublisher'],
 })
 
 interface GetReviewsParams {
-    packageName: string;
     maxResults?: number;
     pageToken?: string;
 }
@@ -21,10 +21,8 @@ export class GooglePlayApi {
         this.packageName = packageName;
     }
 
-    // 리뷰 목록 가져오기
-    async getReviews({ maxResults = 100, pageToken }: GetReviewsParams): Promise<ReviewsResponse> {
+    async getReviews({maxResults = 100, pageToken}: GetReviewsParams): Promise<PlayStoreReviewsResponse> {
         try {
-            // Google Auth 클라이언트로 액세스 토큰 가져오기
             const client = await auth.getClient();
             const accessToken = (await client.getAccessToken()).token;
 
@@ -33,7 +31,7 @@ export class GooglePlayApi {
             }
 
             const url = `${BASE_URL}/${this.packageName}/reviews`;
-            const response = await axios.get<ReviewsResponse>(url, {
+            const response = await axios.get<PlayStoreReviewsResponse>(url, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -42,7 +40,7 @@ export class GooglePlayApi {
                     token: pageToken,
                 },
             });
-
+            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error('Error fetching reviews:', error);
