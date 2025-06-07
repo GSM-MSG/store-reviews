@@ -16,7 +16,7 @@ export class ReviewNotifier {
         try {
             console.log(`\n=== ${appConfig.appName} ===`);
 
-            const storage = loadStorage();
+            const storage = loadStorage({origin: 'appstore'});
             const processedReviewIds =
                 storage.processedReviews[appConfig.appId] || [];
 
@@ -54,7 +54,7 @@ export class ReviewNotifier {
                         storage.processedReviews[appConfig.appId].slice(-1000);
                 }
 
-                saveStorage(storage);
+                saveStorage({storage, origin: 'appstore'});
             }
         } catch (error) {
             console.error(`Error ${appConfig.appName}:`, error);
@@ -66,17 +66,13 @@ export class ReviewNotifier {
             await this.checkReviewsForApp(app);
 
             if (apps.length > 1) {
-                await this.delay(2000);
+                await delay(2000);
             }
         }
     }
 
     validateConfiguration(): boolean {
         return this.appStoreAPI.validateConfig();
-    }
-
-    private delay(ms: number): Promise<void> {
-        return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
     async sendReview(

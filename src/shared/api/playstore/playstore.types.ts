@@ -1,7 +1,7 @@
 interface DeviceMetadata {
-    productName: string;
-    manufacturer: string;
-    deviceClass: string;
+    productName?: string;
+    manufacturer?: string;
+    deviceClass?: string;
     screenWidthPx: number;
     screenHeightPx: number;
     nativePlatform: string;
@@ -10,33 +10,32 @@ interface DeviceMetadata {
     ramMb: number;
 }
 
+type Timestamp = {
+    seconds: string;
+    nanos: number;
+}
+
 interface UserComment {
     text: string;
-    lastModified: {
-        seconds: string;
-        nanos: number;
-    };
+    lastModified: Timestamp;
     starRating: number;
-    reviewerLanguage: string;
-    device: string;
-    androidOsVersion: number;
-    appVersionCode: number;
-    appVersionName: string;
-    deviceMetadata: DeviceMetadata;
+    reviewerLanguage?: string;
+    device?: string;
+    androidOsVersion?: number;
+    appVersionCode?: number;
+    appVersionName?: string;
+    deviceMetadata?: DeviceMetadata;
+
 }
 
 interface DeveloperComment {
     text: string,
-    lastModified: {
-        seconds: string;
-        nanos: number;
-    };
+    lastModified: Timestamp,
 }
 
-interface Comment {
-    userComment: UserComment;
-    developerReply?: DeveloperComment;
-}
+type Comment =
+    | { userComment: UserComment; developerComment?: never }
+    | { userComment?: never; developerComment: DeveloperComment };
 
 export interface PlayStoreReview {
     reviewId: string;

@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import {Config, Storage} from "../feature/appstore/types.js";
+import {ReviewOrigins} from "./type/review-origins.js";
 
 export function loadConfig(): Config {
     try {
@@ -13,9 +14,9 @@ export function loadConfig(): Config {
     }
 }
 
-export function loadStorage(): Storage {
+export function loadStorage({origin}: { origin: ReviewOrigins }): Storage {
     try {
-        const storagePath = path.join(process.cwd(), "storage.json");
+        const storagePath = path.join(process.cwd(), (origin == 'appstore') ? "storage.json" : 'playstore-storage.json');
         const storageData = fs.readFileSync(storagePath, "utf-8");
         return JSON.parse(storageData);
     } catch (error) {
@@ -24,9 +25,9 @@ export function loadStorage(): Storage {
     }
 }
 
-export function saveStorage(storage: Storage): void {
+export function saveStorage({storage, origin}: { storage: Storage, origin: ReviewOrigins }): void {
     try {
-        const storagePath = path.join(process.cwd(), "storage.json");
+        const storagePath = path.join(process.cwd(), (origin == 'appstore') ? "storage.json" : "playstore-storage.json");
         fs.writeFileSync(storagePath, JSON.stringify(storage, null, 2));
     } catch (error) {
         console.error("Error:", error);
