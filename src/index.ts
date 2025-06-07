@@ -32,7 +32,7 @@ class StoreReviewsBot {
 async function main() {
     // const bot = new StoreReviewsBot();
     // await bot.runOnce();
-    const bot = new PlayStoreReviewBot({packageName: 'com.onmi.aos', discordWebhookUrl: "https://discord.com/api/webhooks/1380781650551771277/U_riSrhTI_SzlYzLHhrNGKxtrMFthxmc-YhBsTK2g5r030yxLfGsW41hoKg6uDpSQWPk"});
+    const bot = new PlayStoreReviewBot({packageName: 'packageName', discordWebhookUrl: "discordWebhookUrl"});
     await bot.runOnce();
 }
 
