@@ -1,5 +1,6 @@
 import {ReviewNotifier} from "./feature/appstore/review-notifier.js";
 import {loadConfig} from "./shared/utils.js";
+import {PlayStoreReviewBot} from "./feature/playstore/play-store-review-bot.js";
 
 class StoreReviewsBot {
     private reviewNotifier: ReviewNotifier;
@@ -29,7 +30,9 @@ class StoreReviewsBot {
 }
 
 async function main() {
-    const bot = new StoreReviewsBot();
+    // const bot = new StoreReviewsBot();
+    // await bot.runOnce();
+    const bot = new PlayStoreReviewBot({packageName: 'packageName', discordWebhookUrl: "discordWebhookUrl"});
     await bot.runOnce();
 }
 

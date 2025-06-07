@@ -1,0 +1,1 @@
+export type ReviewOrigins = 'appstore' | 'playstore';
