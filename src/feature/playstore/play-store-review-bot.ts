@@ -1,6 +1,6 @@
 import {PlayStoreReview, PlayStoreReviewsResponse} from "../../shared/api/playstore/playstore.types.js";
 import {GooglePlayApi} from "../../shared/api/playstore/playstore.js";
-import {loadStorage} from "../../shared/utils.js";
+import {loadStorage, saveStorage} from "../../shared/utils.js";
 import {DiscordEmbed} from "../appstore/types.js";
 import {DiscordApi} from "../../shared/api/discord/discord.js";
 import {delay} from "../../shared/utils/async.js";
@@ -129,12 +129,14 @@ export class PlayStoreReviewBot {
             this.packageName
         );
 
+        console.log(`sentCount: ${sentCount}`);
         if (sentCount > 0) {
             const newProcessedIds = newReviews.map((review) => review.reviewId);
             storage.processedReviews[this.packageName] = [
                 ...processedReviewIds,
                 ...newProcessedIds,
             ];
+            saveStorage({storage, origin: 'playstore'});
         }
     }
 }
