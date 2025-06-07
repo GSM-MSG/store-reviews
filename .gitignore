@@ -43,3 +43,4 @@ jspm_packages/
 .yarn-integrity
 AuthKey_*.p8
 *.p8
+playstore.config.json
