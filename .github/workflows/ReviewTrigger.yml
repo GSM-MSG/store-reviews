@@ -7,15 +7,15 @@ on:
   push:
     branches: [master]
     paths-ignore:
-      - 'feature/appstore/storage-appstore.json'
-      - 'feature/playstore/storage-playstore.json'
+      - "src/feature/appstore/storage-appstore.json"
+      - "src/feature/playstore/storage-playstore.json"
 
 jobs:
   appstore:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: feature/appstore
+        working-directory: src/feature/appstore
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,8 +26,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Create AuthKey file
         run: echo "${{ secrets.AUTH_KEY_P8 }}" > AuthKey_${{ secrets.KEY_ID }}.p8
@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: feature/playstore
+        working-directory: src/feature/playstore
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -76,8 +76,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Create playstore.config.json
         run: echo '${{ secrets.PLAYSTORE_CONFIG_JSON }}' > playstore.config.json
