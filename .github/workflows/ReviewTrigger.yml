@@ -87,8 +87,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add storage.json
-          git commit -m ":card_file_box: Update Play Store reviews storage" || exit 0
+          git commit -m ":card_file_box: Update processed reviews storage" || exit 0
           git push
-        working-directory: .
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
