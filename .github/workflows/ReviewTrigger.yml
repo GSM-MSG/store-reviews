@@ -1,0 +1,94 @@
+name: Review Crawler
+
+on:
+  schedule:
+    - cron: "0 * * * *" # 매시간 실행
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  appstore:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: feature/appstore
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Create AuthKey file
+        run: echo "${{ secrets.AUTH_KEY_P8 }}" > AuthKey_${{ secrets.KEY_ID }}.p8
+        env:
+          AUTH_KEY_P8: ${{ secrets.AUTH_KEY_P8 }}
+          KEY_ID: ${{ secrets.KEY_ID }}
+
+      - name: Create config.json
+        run: echo '${{ secrets.CONFIG_JSON }}' > config.json
+        env:
+          CONFIG_JSON: ${{ secrets.CONFIG_JSON }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Run App Store review crawler
+        run: npm run prod
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add storage.json
+          git commit -m ":card_file_box: Update App Store reviews storage" || exit 0
+          git push
+        working-directory: .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  playstore:
+    needs: appstore
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: feature/playstore
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Create playstore.config.json
+        run: echo '${{ secrets.PLAYSTORE_CONFIG_JSON }}' > playstore.config.json
+        env:
+          PLAYSTORE_CONFIG_JSON: ${{ secrets.PLAYSTORE_CONFIG_JSON }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Run Play Store review crawler
+        run: npm run prod
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add storage.json
+          git commit -m ":card_file_box: Update Play Store reviews storage" || exit 0
+          git push
+        working-directory: .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
