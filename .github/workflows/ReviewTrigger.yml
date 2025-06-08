@@ -2,8 +2,13 @@ name: Review Crawler
 
 on:
   schedule:
-    - cron: "0 * * * *" # 매시간 실행
-  workflow_dispatch: # 수동 실행 가능
+    - cron: "0 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'feature/appstore/storage-appstore.json'
+      - 'feature/playstore/storage-playstore.json'
 
 jobs:
   appstore:
@@ -14,6 +19,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: master
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -45,11 +53,12 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add storage.json
+          git add storage-appstore.json
           git commit -m ":card_file_box: Update processed appstore reviews storage" || exit 0
-          git push
+          git push origin master
+        working-directory: .
         env:
-          GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   playstore:
     needs: appstore
@@ -60,6 +69,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: master
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -85,8 +97,9 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add storage.json
+          git add storage-playstore.json
           git commit -m ":card_file_box: Update processed playstore reviews storage" || exit 0
-          git push
+          git push origin master
+        working-directory: .
         env:
-          GITHUB_TOKEN: ${{ secrets.COMMIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
