@@ -7,7 +7,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "prod": "npm run build && npm start"
+    "prod": "npm run build && npm start",
+    "appstore": "npm run build && npm start --origin appstore",
+    "playstore": "npm run build && npm start --origin playstore"
   },
   "author": "",
   "license": "MIT",

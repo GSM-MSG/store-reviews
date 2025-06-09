@@ -44,3 +44,4 @@ jspm_packages/
 AuthKey_*.p8
 *.p8
 playstore.config.json
+playstore.service-account.json

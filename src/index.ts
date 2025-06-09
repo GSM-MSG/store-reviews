@@ -28,17 +28,19 @@ class StoreReviewsBot {
     }
   }
 }
-
 async function main() {
-  const playStoreConfig = loadPlayStoreConfig();
-  const playStoreBot = new PlayStoreReviewBot({
-    packageName: playStoreConfig.packageName,
-    discordWebhookUrl: playStoreConfig.discordWebhookUrl,
-  });
-  await playStoreBot.runOnce();
-
-  const appStoreBot = new StoreReviewsBot();
-  await appStoreBot.runOnce();
+  const origin = process.argv[2];
+  if(origin === "playstore") {
+    const playStoreConfig = loadPlayStoreConfig();
+    const playStoreBot = new PlayStoreReviewBot({
+      packageName: playStoreConfig.packageName,
+      discordWebhookUrl: playStoreConfig.discordWebhookUrl,
+    });
+    await playStoreBot.runOnce();
+  } else if (origin === "appstore") {
+    const appStoreBot = new StoreReviewsBot();
+    await appStoreBot.runOnce();
+  }
 }
 
 main().catch(console.error);

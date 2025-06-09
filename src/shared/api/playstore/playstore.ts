@@ -5,7 +5,7 @@ import { PlayStoreReviewsResponse } from "./playstore.types.js";
 const BASE_URL = `https://androidpublisher.googleapis.com/androidpublisher/v3/applications`;
 
 const auth = new GoogleAuth({
-  keyFile: "./playstore.config.json",
+  keyFile: "./playstore.service-account.json",
   scopes: ["https://www.googleapis.com/auth/androidpublisher"],
 });
 
