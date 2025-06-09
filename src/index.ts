@@ -1,5 +1,5 @@
 import { ReviewNotifier } from "./feature/appstore/review-notifier.js";
-import { loadConfig } from "./shared/utils.js";
+import {loadConfig, loadPlayStoreConfig} from "./shared/utils.js";
 import { PlayStoreReviewBot } from "./feature/playstore/play-store-review-bot.js";
 
 class StoreReviewsBot {
@@ -30,10 +30,10 @@ class StoreReviewsBot {
 }
 
 async function main() {
+  const playStoreConfig = loadPlayStoreConfig();
   const playStoreBot = new PlayStoreReviewBot({
-    packageName: "com.onmi.aos",
-    discordWebhookUrl:
-      "https://discord.com/api/webhooks/1380781650551771277/U_riSrhTI_SzlYzLHhrNGKxtrMFthxmc-YhBsTK2g5r030yxLfGsW41hoKg6uDpSQWPk",
+    packageName: playStoreConfig.packageName,
+    discordWebhookUrl: playStoreConfig.discordWebhookUrl,
   });
   await playStoreBot.runOnce();
 

@@ -2,6 +2,18 @@ import * as fs from "fs";
 import * as path from "path";
 import { Config, Storage } from "../feature/appstore/types.js";
 import { ReviewOrigins } from "./type/review-origins.js";
+import {PlayStoreConfig} from "../feature/playstore/types.js";
+
+export function loadPlayStoreConfig(): PlayStoreConfig {
+  try {
+    const configPath = path.join(process.cwd(), "playstore.config.json");
+    const configData = fs.readFileSync(configPath, "utf-8");
+    return JSON.parse(configData);
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
 
 export function loadConfig(): Config {
   try {
