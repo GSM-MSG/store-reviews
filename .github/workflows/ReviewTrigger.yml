@@ -13,9 +13,6 @@ on:
 jobs:
   appstore:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/feature/appstore
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -54,16 +51,12 @@ jobs:
           git add storage-appstore.json
           git commit -m ":card_file_box: Update processed appstore reviews storage" || exit 0
           git push origin master
-        working-directory: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   playstore:
     needs: appstore
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: src/feature/playstore
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -102,6 +95,5 @@ jobs:
           git add storage-playstore.json
           git commit -m ":card_file_box: Update processed playstore reviews storage" || exit 0
           git push origin master
-        working-directory: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
